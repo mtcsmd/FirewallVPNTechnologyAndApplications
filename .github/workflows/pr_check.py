@@ -499,6 +499,14 @@ def check_with_kimi(student_id_name: str, lab: str, changed_files: list):
 
 
 def main():
+
+    global PR_TITLE
+    # 实时获取最新 PR 标题，防止读到缓存的旧标题
+    pr_data = gh_get(f"/repos/{REPO}/pulls/{PR_NUMBER}")
+    PR_TITLE = pr_data.get("title", PR_TITLE)
+    
+
+    
     print(f"[PR #{PR_NUMBER}] 开始审核：{PR_TITLE}")
 
     # 1. 标题格式检查
